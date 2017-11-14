@@ -9,7 +9,23 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var tasks = require('./routes/tasks');
 
+
+var db = require('./databases/db');
+
 var app = express();
+
+// Connect to POstgres on start
+
+
+db.connect(
+    (err)=> {
+        if (err) {
+          console.log('Unable to connect to Postgres.');
+          process.exit(1);
+        }
+    }
+);
+
 
 
 // view engine setup
@@ -30,20 +46,20 @@ app.use('/tasks', tasks);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;

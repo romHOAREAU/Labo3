@@ -10,7 +10,7 @@ router.get('/',taskController.task_list);
 router.get('/:id',taskController.task_detail);
 
 //POST one Task
-router.post('/',taskController.task_ajout_post);
+router.post('/ajouttask',taskController.task_ajout_post);
 
 
 module.exports = router;
